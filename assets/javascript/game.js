@@ -1,9 +1,9 @@
-var computerOptions = {
+var states = {
   'alabama': 'assets/images/alabama.png',
   'alaska': 'assets/images/alaska.png',
   'arizona': 'assets/images/arizona.png',
   'arkansas': 'assets/images/arkansas.png',
-  'california' 'assets/images/california.png',
+  'california': 'assets/images/california.png',
   'colorado': 'assets/images/colorado.png',
   'connecticut': 'assets/images/connecticut.gif',
   'deleware': 'assets/images/deleware.png',
@@ -50,3 +50,12 @@ var computerOptions = {
   'wisconsin': 'assets/images/wisconsin.png',
   'wyoming': 'assets/images/wyoming.png'
   };
+
+var stateObj = {
+  alabama: {
+    name: 'alabama',
+    image: 'assets/images/alabama.png'
+  }
+}
+
+console.log(stateObj.alabama.image)
