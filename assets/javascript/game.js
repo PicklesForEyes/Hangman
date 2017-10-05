@@ -29,7 +29,7 @@ var states = {
   },
   7: {
     name: 'deleware',
-    image: 'assets/images/deleware.png'
+    image: 'assets/images/delaware.png'
   },
   8: {
     name: 'florida',
@@ -202,8 +202,32 @@ var states = {
   length: 50
 }
 
+  var currentState;
+
 function newWord() {
   var num = Math.floor(Math.random() * 50);
-  console.log(states[num]);
+  currentState = states[num];
+  drawStates();
 }
+
+function drawStates() {
+  var stateImgDiv = document.getElementById('state-img');
+
+  while(stateImgDiv.firstChild){
+    stateImgDiv.removeChild(stateImgDiv.firstChild);
+  }
+
+  var stateImg = document.createElement('img');
+    stateImg.setAttribute('src', currentState.image);
+
+  stateImgDiv.appendChild(stateImg);
+}
+
+// need to display image to DOM
+// need to display blanks to DOM
+// need to check keyboard input
+// need to compair to letters in name
+// need to restrict from repeat letters
+// need success and fail options
+
 // turn object into an array of objects. Remove the property names and use the name property to label them
