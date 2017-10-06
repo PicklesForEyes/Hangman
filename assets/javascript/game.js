@@ -203,29 +203,90 @@ var states = {
 }
 
   var currentState;
+  var guessArr = [];
+  var guessLeft = 15;
+  var usedLtr = [];
+  var stateImgDiv = document.getElementById('state-img');
+  var stateNameDiv = document.getElementById('guess-array');
+  var guessedLetters = document.getElementById('guessed-letters');
+  var guessesLeft = document.getElementById('guess-left');
+
+  
+
 
 function newWord() {
   var num = Math.floor(Math.random() * 50);
   currentState = states[num];
+  guessArr = currentState.name.split('');
+  // console.log(guessArr);
+  guessLeft = 15;
+  usedLtr = [];
+  while(guessedLetters.firstChild){
+    guessedLetters.removeChild(guessedLetters.firstChild);
+  }
+  guessesLeft.innerHTML = guessLeft
   drawStates();
 }
 
 function drawStates() {
-  var stateImgDiv = document.getElementById('state-img');
 
   while(stateImgDiv.firstChild){
     stateImgDiv.removeChild(stateImgDiv.firstChild);
   }
 
+  while(stateNameDiv.firstChild){
+    stateNameDiv.removeChild(stateNameDiv.firstChild);
+  }
+
   var stateImg = document.createElement('img');
     stateImg.setAttribute('src', currentState.image);
+
+  for (var i = 0; i < guessArr.length; i++){
+    var stateLtr = document.createElement('div');
+      stateLtr.classList.add('state-letter', 'hidden');
+      stateLtr.setAttribute('data-letter', guessArr[i]);
+      stateLtr.innerHTML = guessArr[i];
+    document.getElementById('guess-array').appendChild(stateLtr);
+  }
 
   stateImgDiv.appendChild(stateImg);
 }
 
-// need to display image to DOM
-// need to display blanks to DOM
-// need to check keyboard input
+document.onkeyup = function(event) {
+  var ltr = event.key.toLowerCase();
+  event = event.which;
+  if(event < 65 || event > 90) return;
+  guessLeft--;
+  var children = document.getElementById('guess-array').childNodes;
+  console.log(children);
+  // console.log(event);
+  // console.log(ltr);
+
+  if(guessLeft === 0){
+    alert('Gee dang! You lost');
+    newWord();
+  }
+
+    if(!guessArr.includes(ltr) && !usedLtr.includes(ltr)){
+      var used = document.createElement('div');
+        used.classList.add('state-letter');
+        used.innerHTML = ltr;
+      guessLeft++;
+      document.getElementById('guessed-letters').appendChild(used);
+      usedLtr.push(ltr);
+    }
+
+  for (var i = 0; i < guessArr.length; i++){
+    if(children[i].dataset.letter === ltr){
+      children[i].classList.remove('hidden');
+    }
+  }
+  document.getElementById('guess-left').innerHTML = guessLeft;
+}
+
+// need to display image to DOM: done
+// need to display blanks to DOM: done
+// need to check keyboard input: done
 // need to compair to letters in name
 // need to restrict from repeat letters
 // need success and fail options
